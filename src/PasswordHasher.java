@@ -1,13 +1,18 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Класс для хеширования паролей с использованием алгоритма SHA-256.
+ */
 public class PasswordHasher {
-    public static void main(String[] args) {
-        System.out.println(hashPassword("password123")); // Для admin
-        System.out.println(hashPassword("qwerty")); // Для user
-    }
 
-    private static String hashPassword(String password) {
+    /**
+     * Хеширует заданный пароль.
+     *
+     * @param password Пароль для хеширования.
+     * @return Хешированный пароль в виде строки.
+     */
+    public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(password.getBytes());
@@ -17,9 +22,9 @@ public class PasswordHasher {
                 if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }
-            return hexString.toString(); // Возвращаем хеш пароля
+            return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Ошибка хеширования пароля", e);
         }
     }
 }
